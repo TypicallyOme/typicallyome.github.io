@@ -677,3 +677,208 @@
   </script>
 </body>
 </html>
+<!-- … your existing content up to the gallery … -->
+
+  </div> <!-- end of .gallery -->
+
+  <!-- ──────────────────────────────────────────────── -->
+  <!--                MODAL / POPUP                     -->
+  <!-- ──────────────────────────────────────────────── -->
+  <div id="iframe-modal" class="modal glass" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" title="Close">×</button>
+      
+      <div class="iframe-wrapper">
+        <iframe id="modal-iframe" src="about:blank" frameborder="0"></iframe>
+      </div>
+      
+      <div class="modal-controls">
+        <button id="btn-refresh">↻ Refresh</button>
+        <button id="btn-fullscreen">⛶ Full Screen</button>
+        <button id="btn-new-tab">↗ Open in new tab</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<!-- ──────────────────────────────────────────────── -->
+<!--                   JAVASCRIPT                     -->
+<!-- ──────────────────────────────────────────────── -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>
+// ── Existing lucide & settings code remains here ──
+lucide.createIcons();
+
+// … your existing settings / localStorage / tab cloak code …
+
+// ── NEW: Modal functionality ────────────────────────────────────────
+
+const modal          = document.getElementById('iframe-modal');
+const iframe         = document.getElementById('modal-iframe');
+const modalClose     = document.querySelector('.modal-close');
+const btnRefresh     = document.getElementById('btn-refresh');
+const btnFullscreen  = document.getElementById('btn-fullscreen');
+const btnNewTab      = document.getElementById('btn-new-tab');
+
+let currentUrl = '';
+
+// Close modal
+function closeModal() {
+  modal.style.display = 'none';
+  iframe.src = 'about:blank';     // clear iframe
+  document.body.style.overflow = ''; // restore scroll
+}
+
+modalClose.addEventListener('click', closeModal);
+
+// Close when clicking outside content area
+modal.addEventListener('click', e => {
+  if (e.target === modal) closeModal();
+});
+
+// Refresh
+btnRefresh.addEventListener('click', () => {
+  if (currentUrl) iframe.src = currentUrl;
+});
+
+// New tab
+btnNewTab.addEventListener('click', () => {
+  if (currentUrl) window.open(currentUrl, '_blank');
+  closeModal();
+});
+
+// Fullscreen (works best in modern browsers)
+btnFullscreen.addEventListener('click', () => {
+  if (!iframe) return;
+  
+  if (iframe.requestFullscreen) {
+    iframe.requestFullscreen();
+  } else if (iframe.webkitRequestFullscreen) { /* Safari */
+    iframe.webkitRequestFullscreen();
+  } else if (iframe.msRequestFullscreen) {     /* IE11 */
+    iframe.msRequestFullscreen();
+  }
+});
+
+// Intercept ALL card clicks
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', e => {
+    e.preventDefault();           // stop <a> navigation
+    
+    const url = card.getAttribute('href');
+    if (!url || url === '#' || url.startsWith('javascript:')) return;
+
+    currentUrl = url;
+    iframe.src = url;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+  });
+});
+
+</script>
+
+<!-- Add these styles at the end of your <style> tags or in a new <style> block -->
+<style>
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 20px;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 94%;
+    max-width: 1280px;
+    height: 92vh;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    background: rgba(0,0,0,0.3);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.25s;
+  }
+
+  .modal-close:hover {
+    background: rgba(220,20,60,0.7);
+    transform: rotate(90deg);
+  }
+
+  .iframe-wrapper {
+    flex: 1;
+    position: relative;
+    min-height: 0;           /* important for flex */
+  }
+
+  #modal-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .modal-controls {
+    padding: 14px 24px;
+    background: rgba(0,0,0,0.18);
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .modal-controls button {
+    padding: 10px 22px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .modal-controls button:hover {
+    background: rgba(255,255,255,0.28);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 640px) {
+    .modal-controls {
+      flex-wrap: wrap;
+      padding: 12px;
+    }
+    .modal-controls button {
+      flex: 1 1 45%;
+      margin: 4px;
+    }
+  }
+</style>
