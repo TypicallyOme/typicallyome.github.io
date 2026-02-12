@@ -239,6 +239,81 @@
       text-shadow: 0 0 15px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.4);
     }
   </style>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      padding: 0 20px;
+      justify-content: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 240px;
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      text-decoration: none;
+      backdrop-filter: blur(18px) saturate(190%);
+      -webkit-backdrop-filter: blur(18px) saturate(190%);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 
+        0 10px 40px rgba(0,0,0,0.28),
+        inset 0 0 14px rgba(255,255,255,0.10);
+      transition: all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-16px) scale(1.07);
+      box-shadow: 
+        0 28px 56px rgba(0,0,0,0.38),
+        inset 0 0 24px rgba(255,255,255,0.20);
+      border-color: rgba(255, 255, 255, 0.38);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 28px;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.09);
+    }
+
+    .title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px 16px 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.82), transparent);
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      transform: translateY(90%);
+      opacity: 0;
+      transition: all 0.48s ease;
+    }
+
+    .card:hover .title {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
  <!--Navigation Bar-->
@@ -319,7 +394,19 @@
   <section class="hero glass" id="home">
     <h1>Welcome to Arcady</h1>
     <p>Totally Not From The Creator Of Arcadium...</p>
+
+    <!--Extra stuffff cati-->
   </section>
+  <div class="container">
+    <h1>Explore Extra Categories</h1>
+
+    <div class="gallery">
+      <a href="epsteinfiles.global.ssl.fastly.net/" target=blank class="card">
+        <img src="data:image/jpeg;base64,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" alt="Tech">
+        <div class="title">Epstein Files</div>
+      </a>
+    </div>
+  </div>
 
   <!-- Floating Toggle Switch -->
 <div style="position: fixed; bottom: 32px; right: 32px; z-index: 950;">
