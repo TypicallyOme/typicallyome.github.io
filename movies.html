@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arcady - Movies</title>
+  <link rel="icon" type="image/png" href="/download.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #0d1b2a;
+      background-image: linear-gradient(rgba(13,27,42,0.92), rgba(13,27,42,0.78));
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.6s ease, color 0.6s ease, font-family 0.6s ease, background-image 0.6s ease;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35),
+                  inset 0 2px 10px rgba(255,255,255,0.08);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1.2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      z-index: 1000;
+      min-width: 85vw;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    nav:hover {
+      transform: translateX(-50%) scale(1.02) translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: inherit;
+      text-decoration: none;
+      gap: 0.6rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      transition: all 0.35s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.12);
+      transform: scale(1.06) translateY(-2px);
+    }
+
+    #settings-btn {
+      background: rgba(255,255,255,0.18);
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.4s;
+    }
+
+    #settings-btn:hover {
+      transform: scale(1.15) rotate(15deg);
+      background: rgba(255,255,255,0.3);
+    }
+
+    #settings-panel {
+      position: fixed;
+      top: 90px;
+      right: 30px;
+      width: 340px;
+      padding: 2rem;
+      gap: 1.3rem;
+      display: none;
+      flex-direction: column;
+      z-index: 2000;
+      max-height: 85vh;
+      overflow-y: auto;
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+      transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #settings-panel[style*="display: flex"] {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #settings-panel label {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+      display: block;
+      color: #e0e0e0;
+    }
+
+    #settings-panel input,
+    #settings-panel select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    #settings-panel input:focus,
+    #settings-panel select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+    }
+
+    #settings-panel button {
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.12);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.35s;
+    }
+
+    #settings-panel button:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+
+    #reset-settings {
+      background: rgba(220, 20, 60, 0.35) !important;
+    }
+
+    #reset-settings:hover {
+      background: rgba(220, 20, 60, 0.55) !important;
+    }
+
+    /* ── Movie Banner ── */
+    .movie-banner {
+      width: 92%;
+      max-width: 1240px;
+      margin: 140px auto 0;
+      padding: 4.5rem 2.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(30,20,80,0.75), rgba(90,30,110,0.65));
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+    }
+
+    .movie-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&q=60') center/cover;
+      opacity: 0.14;
+      z-index: 0;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .movie-banner h2 {
+      font-size: 4.2rem;
+      margin-bottom: 0.8rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 6px 25px rgba(0,0,0,0.8);
+    }
+
+    .movie-banner .highlight {
+      color: #ffcc00;
+      font-weight: 700;
+    }
+
+    .movie-banner p {
+      font-size: 1.5rem;
+      opacity: 0.88;
+      margin-top: 0.6rem;
+    }
+
+    /* Search */
+    .search-container {
+      margin: 50px auto 60px;
+      max-width: 720px;
+      width: 90%;
+    }
+
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      color: rgba(255,255,255,0.6);
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+    }
+
+    #game-search {
+      width: 100%;
+      padding: 16px 16px 16px 56px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    #game-search:focus {
+      background: rgba(255,255,255,0.16);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
+      outline: none;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      padding: 40px 20px;
+      justify-content: center;
+      max-width: 1400px;
+    }
+
+    .card {
+      width: 220px;
+      height: 330px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      transition: all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-16px) scale(1.06);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+    }
+
+    .title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px 14px 18px;
+      background: linear-gradient(to top, rgba(0,0,0,0.92), transparent);
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      transform: translateY(80%);
+      opacity: 0;
+      transition: all 0.48s ease;
+    }
+
+    .card:hover .title {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 20px;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 96%;
+      max-width: 1320px;
+      height: 94vh;
+      background: rgba(20,20,40,0.7);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+    }
+
+    .modal-close:hover {
+      background: #dc143c;
+      transform: rotate(90deg);
+    }
+
+    .iframe-wrapper {
+      flex: 1;
+      position: relative;
+      min-height: 0;
+    }
+
+    #modal-iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .modal-controls {
+      padding: 16px 28px;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal-controls button {
+      padding: 12px 28px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      color: white;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .modal-controls button:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      .modal-controls {
+        flex-wrap: wrap;
+        padding: 12px;
+      }
+      .modal-controls button {
+        flex: 1 1 45%;
+        margin: 6px;
+      }
+      .movie-banner h2 {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="glass" id="nav-bar">
+    <a href="index.html" class="nav-logo">
+      <i data-lucide="sparkles"></i>
+      Arcady
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html"><i data-lucide="home"></i> Home</a>
+      <a href="games.html"><i data-lucide="gamepad-2"></i> Games</a>
+      <a href="proxys.html"><i data-lucide="layout-grid"></i> Proxys</a>
+      <a href="chatgpt.html"><i data-lucide="brain"></i> Ai</a>
+      <a href="more.html"><i data-lucide="circle-ellipsis"></i> More</a>
+      <button id="settings-btn">
+        <i data-lucide="settings"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel" class="glass">
+    <label for="bg-color">Background Color:</label>
+    <input type="color" id="bg-color" value="#0d1b2a">
+
+    <label for="font-color">Font Color:</label>
+    <input type="color" id="font-color" value="#f0f0f0">
+
+    <label for="font-style">Font Style:</label>
+    <select id="font-style">
+      <option value="'Fredoka', sans-serif">Fredoka</option>
+      <option value="'Roboto', sans-serif">Roboto</option>
+      <option value="'Playfair Display', serif">Playfair Display</option>
+    </select>
+
+    <label for="bg-image">Background Image:</label>
+    <input type="file" id="bg-image" accept="image/*">
+
+    <button id="open-about-blank">Open in about:blank</button>
+
+    <label for="tab-title">Tab Cloak Title:</label>
+    <input type="text" id="tab-title" placeholder="e.g., Google Classroom">
+
+    <label for="tab-favicon">Tab Cloak Favicon URL:</label>
+    <input type="text" id="tab-favicon" placeholder="https://.../favicon.ico">
+    <button id="apply-cloak">Apply Tab Cloak</button>
+
+    <label>Font Glow:</label>
+    <input type="checkbox" id="font-glow">
+
+    <label for="nav-position">Nav Position:</label>
+    <select id="nav-position">
+      <option value="top-center">Top Center</option>
+      <option value="bottom-center">Bottom Center</option>
+      <option value="left">Left Side</option>
+      <option value="right">Right Side</option>
+    </select>
+
+    <button id="reset-settings">Reset All Settings</button>
+  </div>
+
+  <!-- Movie Banner -->
+  <div class="movie-banner glass">
+    <div class="banner-content">
+      <h2>Movies from <span class="highlight">Oooozee</span></h2>
+      <p>Stream the latest blockbusters & hidden gems</p>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-container glass">
+    <div class="search-wrapper">
+      <i data-lucide="search" class="search-icon"></i>
+      <input type="text" id="game-search" placeholder="Search movies, actors, genres..." autocomplete="off">
+    </div>
+  </div>
+
+  <!-- Gallery / Movie Cards -->
+  <div class="gallery">
+    <a href="https://example.com/watch/dune2" class="card">
+      <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMUBHN.jpg" alt="Dune: Part Two">
+      <div class="title">Dune: Part Two</div>
+    </a>
+
+    <a href="https://example.com/watch/wicked" class="card">
+      <img src="https://image.tmdb.org/t/p/w500/A2avUoNFstnBhAnHiogXQs4c9Bt.jpg" alt="Wicked">
+      <div class="title">Wicked</div>
+    </a>
+
+    <a href="https://example.com/watch/deadpool" class="card">
+      <img src="https://image.tmdb.org/t/p/w500/mxLuRaMeDMvU65hzBRpRrdqQ7gN.jpg" alt="Deadpool & Wolverine">
+      <div class="title">Deadpool & Wolverine</div>
+    </a>
+
+    <a href="https://example.com/watch/insideout2" class="card">
+      <img src="https://image.tmdb.org/t/p/w500/fNtqD4BTFj0Bgo9lyoAtmNFzxHN.jpg" alt="Inside Out 2">
+      <div class="title">Inside Out 2</div>
+    </a>
+
+    <a href="https://example.com/watch/joker2" class="card">
+      <img src="https://image.tmdb.org/t/p/w500/8x2z3Yx2g3Zx3Yx2g3Zx3Yx2g3Z.jpg" alt="Joker: Folie à Deux">
+      <div class="title">Joker: Folie à Deux</div>
+    </a>
+
+    <!-- Add more cards here as needed -->
+  </div>
+
+  <!-- Modal -->
+  <div id="iframe-modal" class="modal glass" style="display: none;">
+    <div class="modal-content">
+      <button class="modal-close" title="Close">×</button>
+      <div class="iframe-wrapper">
+        <iframe id="modal-iframe" src="about:blank" frameborder="0"></iframe>
+      </div>
+      <div class="modal-controls">
+        <button id="btn-refresh">↻ Refresh</button>
+        <button id="btn-fullscreen">⛶ Full Screen</button>
+        <button id="btn-new-tab">↗ Open in new tab</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    lucide.createIcons();
+
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsPanel = document.getElementById('settings-panel');
+    const body = document.body;
+    const navBar = document.getElementById('nav-bar');
+
+    // Toggle settings panel
+    settingsBtn.addEventListener('click', () => {
+      settingsPanel.style.display = settingsPanel.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Load saved settings
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('bgColor')) body.style.backgroundColor = localStorage.getItem('bgColor');
+      if (localStorage.getItem('fontColor')) body.style.color = localStorage.getItem('fontColor');
+      if (localStorage.getItem('fontStyle')) body.style.fontFamily = localStorage.getItem('fontStyle');
+      if (localStorage.getItem('bgImage')) {
+        body.style.backgroundImage = `url(${localStorage.getItem('bgImage')})`;
+        body.style.backgroundSize = 'cover';
+        body.style.backgroundPosition = 'center';
+      }
+      if (localStorage.getItem('fontGlow') === 'true') {
+        body.classList.add('font-glow');
+        document.getElementById('font-glow').checked = true;
+      }
+      if (localStorage.getItem('navPosition')) {
+        applyNavPosition(localStorage.getItem('navPosition'));
+        document.getElementById('nav-position').value = localStorage.getItem('navPosition');
+      }
+      if (localStorage.getItem('tabTitle')) document.title = localStorage.getItem('tabTitle');
+      if (localStorage.getItem('tabFavicon')) {
+        let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.rel = 'icon';
+        link.href = localStorage.getItem('tabFavicon');
+        document.head.appendChild(link);
+      }
+    });
+
+    // ── Settings listeners (same as before) ──
+    document.getElementById('bg-color').addEventListener('input', e => {
+      body.style.backgroundColor = e.target.value;
+      localStorage.setItem('bgColor', e.target.value);
+    });
+
+    document.getElementById('font-color').addEventListener('input', e => {
+      body.style.color = e.target.value;
+      localStorage.setItem('fontColor', e.target.value);
+    });
+
+    document.getElementById('font-style').addEventListener('change', e => {
+      body.style.fontFamily = e.target.value;
+      localStorage.setItem('fontStyle', e.target.value);
+    });
+
+    document.getElementById('bg-image').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const url = ev.target.result;
+          body.style.backgroundImage = `url(${url})`;
+          body.style.backgroundSize = 'cover';
+          body.style.backgroundPosition = 'center';
+          localStorage.setItem('bgImage', url);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('open-about-blank').addEventListener('click', () => {
+      const win = window.open('about:blank', '_blank');
+      const iframe = win.document.createElement('iframe');
+      iframe.src = location.href;
+      iframe.style.cssText = 'position:fixed;inset:0;border:none;width:100%;height:100%;';
+      win.document.body.appendChild(iframe);
+    });
+
+    document.getElementById('apply-cloak').addEventListener('click', () => {
+      const title = document.getElementById('tab-title').value.trim();
+      const favicon = document.getElementById('tab-favicon').value.trim();
+      if (title) {
+        document.title = title;
+        localStorage.setItem('tabTitle', title);
+      }
+      if (favicon) {
+        let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.rel = 'icon';
+        link.href = favicon;
+        document.head.appendChild(link);
+        localStorage.setItem('tabFavicon', favicon);
+      }
+    });
+
+    document.getElementById('font-glow').addEventListener('change', e => {
+      body.classList.toggle('font-glow', e.target.checked);
+      localStorage.setItem('fontGlow', e.target.checked);
+    });
+
+    document.getElementById('nav-position').addEventListener('change', e => {
+      const pos = e.target.value;
+      applyNavPosition(pos);
+      localStorage.setItem('navPosition', pos);
+    });
+
+    function applyNavPosition(pos) {
+      navBar.style.position = 'fixed';
+      navBar.style.transform = '';
+      navBar.style.flexDirection = 'row';
+      navBar.style.minWidth = '85vw';
+      navBar.style.width = 'auto';
+      navBar.style.height = 'auto';
+      navBar.style.borderRadius = '24px';
+
+      if (pos === 'top-center') {
+        navBar.style.top = '20px';
+        navBar.style.bottom = '';
+        navBar.style.left = '50%';
+        navBar.style.right = '';
+        navBar.style.transform = 'translateX(-50%)';
+      } else if (pos === 'bottom-center') {
+        navBar.style.top = '';
+        navBar.style.bottom = '20px';
+        navBar.style.left = '50%';
+        navBar.style.right = '';
+        navBar.style.transform = 'translateX(-50%)';
+      } else if (pos === 'left') {
+        navBar.style.top = '50%';
+        navBar.style.left = '20px';
+        navBar.style.right = '';
+        navBar.style.transform = 'translateY(-50%)';
+        navBar.style.flexDirection = 'column';
+        navBar.style.minWidth = 'auto';
+        navBar.style.minHeight = '50vh';
+      } else if (pos === 'right') {
+        navBar.style.top = '50%';
+        navBar.style.left = '';
+        navBar.style.right = '20px';
+        navBar.style.transform = 'translateY(-50%)';
+        navBar.style.flexDirection = 'column';
+        navBar.style.minWidth = 'auto';
+        navBar.style.minHeight = '50vh';
+      }
+    }
+
+    document.getElementById('reset-settings').addEventListener('click', () => {
+      if (!confirm('Reset all settings to default?')) return;
+      localStorage.clear();
+      location.reload();
+    });
+
+    // ── Modal functionality ──
+    const modal = document.getElementById('iframe-modal');
+    const iframe = document.getElementById('modal-iframe');
+    const modalClose = document.querySelector('.modal-close');
+    const btnRefresh = document.getElementById('btn-refresh');
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    const btnNewTab = document.getElementById('btn-new-tab');
+
+    let currentUrl = '';
+
+    function closeModal() {
+      modal.style.display = 'none';
+      iframe.src = 'about:blank';
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+
+    btnRefresh.addEventListener('click', () => {
+      if (currentUrl) iframe.src = currentUrl;
+    });
+
+    btnNewTab.addEventListener('click', () => {
+      if (currentUrl) window.open(currentUrl, '_blank');
+      closeModal();
+    });
+
+    btnFullscreen.addEventListener('click', () => {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      }
+    });
+
+    // Intercept card clicks → open in modal
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', e => {
+        e.preventDefault();
+        const url = card.getAttribute('href');
+        if (!url || url === '#' || url.startsWith('javascript:')) return;
+
+        currentUrl = url;
+        iframe.src = url;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // ── Search filter ──
+    const search = document.getElementById('game-search');
+    const cards = document.querySelectorAll('.card');
+
+    search?.addEventListener('input', e => {
+      const q = e.target.value.toLowerCase().trim();
+      let found = 0;
+      cards.forEach(c => {
+        const t = c.querySelector('.title')?.textContent?.toLowerCase() || '';
+        const show = !q || t.includes(q);
+        c.style.display = show ? '' : 'none';
+        if (show) found++;
+      });
+    });
+  </script>
+</body>
+</html>
