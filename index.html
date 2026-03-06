@@ -696,6 +696,84 @@ p, #splash-subtitle {
   }
 }
   </style>
+  <!-- Updated CSS for the announcement popup with enhanced "liquid glass" effect -->
+  <style>
+    #announcement-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #announcement-modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25),
+                  inset 0 2px 10px rgba(255, 255, 255, 0.5);
+      padding: 2rem;
+      max-width: 500px;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      animation: liquid-flow 4s ease-in-out infinite;
+    }
+
+    #announcement-modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    @keyframes liquid-flow {
+      0%, 100% {
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25),
+                    inset 0 2px 10px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        box-shadow: 0 12px 48px rgba(31, 38, 135, 0.35),
+                    inset 0 4px 15px rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .modal-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .close-btn {
+      background: rgba(0, 0, 0, 0.15);
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
  <!--Navigation Bar-->
@@ -806,102 +884,15 @@ p, #splash-subtitle {
     </div>
   </div>
 </section>
-  <!-- Floating Toggle Switch -->
-<div style="position: fixed; bottom: 32px; right: 32px; z-index: 950;">
-  <button id="toggle-switch" 
-          aria-label="Open extras page"
-          style="position: relative; width: 74px; height: 42px; background: #6b7280; border: none; border-radius: 999px; cursor: pointer; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.35); transition: background 0.4s ease, box-shadow 0.4s ease;">
-    
-    <!-- Track gradient -->
-    <div class="track" style="position: absolute; inset: 0; background: linear-gradient(90deg, #9ca3af, #6b7280); transition: opacity 0.5s ease;"></div>
-    
-    <!-- Active background -->
-    <div class="active-bg" style="position: absolute; inset: 0; background: #6d28d9; opacity: 0; transition: opacity 0.45s ease;"></div>
-    
-    <!-- Knob -->
-    <div id="knob" style="position: absolute; top: 6px; left: 6px; width: 30px; height: 30px; background: white; border-radius: 50%; box-shadow: 0 3px 10px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.9); transition: transform 0.42s cubic-bezier(0.68, -0.4, 0.27, 1.55);"></div>
-    
-    <!-- Inner glow on active -->
-    <div id="glow" style="position: absolute; inset: -10px; background: radial-gradient(circle at 50% 50%, rgba(109,40,217,0.6) 0%, transparent 70%); opacity: 0; pointer-events: none; transition: opacity 0.5s ease;"></div>
-    
-    <!-- Ripple on click -->
-    <div id="ripple" style="position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.35); border-radius: 50%; transform: translate(-50%, -50%); opacity: 0; pointer-events: none; transition: all 0.6s ease-out;"></div>
-  </button>
 
-  <!-- Tooltip -->
-  <div id="tooltip" style="position: absolute; right: 90px; bottom: 10px; background: rgba(30,30,40,0.92); color: #e5e7eb; padding: 0.55rem 1.1rem; border-radius: 10px; font-size: 0.96rem; white-space: nowrap; opacity: 0; transform: translateX(15px); transition: all 0.3s ease; pointer-events: none; backdrop-filter: blur(6px);">
-    Open Extras
+<!-- Announcement Popup HTML -->
+<div id="announcement-modal">
+  <div class="modal-content">
+    <h2>Announcement</h2>
+    <p>Check out "Ome Productions" To get updates and new websites! https://ome-productions.my.canva.site/</p>
+    <button class="close-btn" id="close-modal">Got it!</button>
   </div>
 </div>
-
-<style>
-  #toggle-switch:hover {
-    box-shadow: 0 12px 32px rgba(0,0,0,0.42);
-    transform: translateY(-2px);
-  }
-
-  #toggle-switch:active {
-    transform: scale(0.97) translateY(1px);
-  }
-
-  /* Active state */
-  #toggle-switch.active .active-bg {
-    opacity: 1;
-  }
-
-  #toggle-switch.active #knob {
-    transform: translateX(32px);
-    box-shadow: 0 4px 14px rgba(109,40,217,0.55), inset 0 1px 3px rgba(255,255,255,0.95);
-  }
-
-  #toggle-switch.active #glow {
-    opacity: 1;
-  }
-
-  /* Ripple when pressed */
-  #ripple.active {
-    width: 180px;
-    height: 180px;
-    opacity: 0;
-  }
-
-  #tooltip.show {
-    opacity: 1;
-    transform: translateX(0);
-  }
-</style>
-
-<script>
-const toggle = document.getElementById('toggle-switch');
-const knob = document.getElementById('knob');
-const ripple = document.getElementById('ripple');
-const tooltip = document.getElementById('tooltip');
-
-let isOn = false;
-
-toggle.addEventListener('click', () => {
-  isOn = !isOn;
-  toggle.classList.toggle('active', isOn);
-
-  // Ripple animation
-  ripple.classList.add('active');
-  setTimeout(() => ripple.classList.remove('active'), 600);
-
-  // Tooltip flash
-  tooltip.classList.add('show');
-  setTimeout(() => tooltip.classList.remove('show'), 1600);
-
-  // Redirect after animation completes (feels natural)
-  setTimeout(() => {
-    window.location.href = "chicken.html";   // ← change to your actual page
-  }, 480);
-});
-
-// Hover tooltip
-toggle.parentElement.addEventListener('mouseenter', () => tooltip.classList.add('show'));
-toggle.parentElement.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
-</script>
-
 
  <!--Javascript Stuff-->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -1154,6 +1145,33 @@ function changeSubtitle() {
 setInterval(changeSubtitle, 5000);
 
 setTimeout(changeSubtitle, 5000);
+  </script>
+  <!-- Updated JavaScript for the announcement popup with one-time show -->
+  <script>
+    window.addEventListener('load', () => {
+      const modal = document.getElementById('announcement-modal');
+      const closeBtn = document.getElementById('close-modal');
+
+      // Check if the announcement has already been shown
+      if (localStorage.getItem('announcementShown') !== 'true') {
+        // Show the modal on load
+        modal.classList.add('show');
+        // Mark it as shown
+        localStorage.setItem('announcementShown', 'true');
+      }
+
+      // Close the modal when the button is clicked
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('show');
+      });
+
+      // Optional: Close the modal when clicking outside the content
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+        }
+      });
+    });
   </script>
 </body>
 </html>
