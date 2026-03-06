@@ -399,6 +399,13 @@
   <br>
   <br>
   <br>
+  <section class="title-bar glass" style="margin-top: 20px; max-width: 900px; padding: 1.5rem 2rem; border-radius: 24px; animation: breathe 8s ease-in-out infinite; display: flex; align-items: center; justify-content: center; gap: 2rem; text-align: left;">
+  <img src="https://i.pinimg.com/1200x/3f/f9/8b/3ff98b503436b3c69b15e6051c8b1fa8.jpg" alt="Arcady Logo" style="width: 120px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+  <div style="flex: 1;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Proxys</h1>
+    <p id="splash-subtitle" style="font-size: 1.2rem;">Ik ur here to watch anime sites lol</p>
+  </div>
+</section>
   <div class="gallery">
   <!--Boxes-->
     <a href="https://ixl-learning.thedaedals.com/" class="card" target="_blank">
@@ -717,6 +724,73 @@ document.querySelectorAll('.card').forEach(card => {
 });
 
 </script>
+  <script>
+// Random subtitle rotator (only bottom text changes)
+const subtitles = [
+  "Totally Not From The Creator Of Arcadium...",
+  "Broo this was made less than a week",
+  "Unfiltered internet since breakfast",
+  "We have proxies and bad decisions",
+  "Jeffry Epstein? Ive never heard of him",
+  "Not approved by any school district",
+  "Ladies calm down",
+  "oozeeeeeeeeee approved",
+  "Incognito mode is for cowards",
+  "Made with spite and glitter",
+  "If the FBI is watching, hi mom!",
+  "Loading your daily dose of questionable content...",
+  "Certified 100% vibe-based",
+  "Press F13 to summon the void",
+  "This is probably fine",
+  "Error 418: I'm Gay",
+  "Banned in 47 countries (rumored)",
+  "Your honor, my client was just vibing",
+  "404: Motivation not found",
+  "Running on hopes and expired dreams",
+  "Corny ahh shyt",
+  "Theres a 1% chance u see this",
+  "Class of 067",
+  "Brooooo",
+  "I do this instead of my homework",
+  "I NEED EMPLOYEES",
+  "Frogies Arcade?",
+  "Dude Typical Productions was never peak",
+  "Ooze drooze club",
+  "Omes Typical Site Vs Oooze Crib",
+  "riurgrwibfuwebfwefwef",
+  "She gon call me baby boo",
+  "Gooning since i was born (:",
+  "HOLY LAG",
+  "#cornballs",
+  "Brocadium",
+  "Oooze likes to eat drooze",
+  "Plz request things ill add them for sure",
+  "Hey make sure to check out everythiing we offer",
+  "Grown ass man btw",
+  "DUDE 90% ZOOM IS THE BEST PLEASE TRY IT",
+  "THEY BANNED FASTLYYY NOOOO",
+  "ima kms",
+  "Good game well played",
+];
+
+function changeSubtitle() {
+  const el = document.getElementById("splash-subtitle");
+  
+  el.classList.add("fade");
+
+  setTimeout(() => {
+    const randomIndex = Math.floor(Math.random() * subtitles.length);
+    el.textContent = subtitles[randomIndex];
+    
+    el.classList.remove("fade");
+  }, 1200); // time matches the CSS fade transition
+}
+
+setInterval(changeSubtitle, 5000);
+
+setTimeout(changeSubtitle, 5000);
+  </script>
+
 
 <!-- Add these styles at the end of your <style> tags or in a new <style> block -->
 <style>
