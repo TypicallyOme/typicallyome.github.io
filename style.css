@@ -1,37 +1,4 @@
-/* ====================== HIDE SCROLLBAR PERMANENTLY ====================== */
-/* Works on Chrome, Safari, Edge, Firefox, and Opera */
-
-html {
-  scrollbar-width: none;           /* Firefox */
-  -ms-overflow-style: none;        /* Internet Explorer + Edge */
-  overflow-y: scroll;              /* Keeps scrolling enabled */
-}
-
-html::-webkit-scrollbar {
-  display: none;                   /* Chrome, Safari, Edge, Opera */
-}
-
-/* Also apply to body for extra safety */
-body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  overflow-y: scroll;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* Optional: If you also want to hide scrollbar inside the settings panel */
-#settings-panel {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-#settings-panel::-webkit-scrollbar {
-  display: none;
-}
-
+<!--style.css--!>
 * {
   margin: 0;
   padding: 0;
