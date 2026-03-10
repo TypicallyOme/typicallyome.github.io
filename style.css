@@ -1,6 +1,4 @@
-/* ====================== ALL STYLES COMBINED ====================== */
 
-/* Base Reset & Body */
 * {
   margin: 0;
   padding: 0;
@@ -378,14 +376,14 @@ p, #splash-subtitle {
   .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
   #settings-panel { width: 90vw; right: 5vw; top: 100px; }
 }
-  <style>
-  .search-wrapper { position: relative; display: flex; align-items: center; }
+
+.search-wrapper { position: relative; display: flex; align-items: center; }
 .search-icon { position: absolute; left: 16px; color: rgba(0,0,0,0.7); width: 20px; height: 20px; pointer-events: none; }
 #game-search { width: 100%; padding: 14px 14px 14px 48px; border-radius: 16px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); font-size: 1.05rem; }
 #game-search:focus { background: rgba(255,255,255,0.25); box-shadow: 0 0 0 3px rgba(255,255,255,0.4); outline: none; }
 .no-results { text-align: center; margin: 80px 20px; font-size: 1.4rem; color: rgba(0,0,0,0.65); display: none; }
-  </style>
-  <style>
+}
+
   .card {
   position: relative;           
 }
@@ -452,4 +450,3 @@ p, #splash-subtitle {
   transform: none;
   /* ... rest same */
 }
-  </style>
