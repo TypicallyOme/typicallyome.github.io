@@ -378,7 +378,6 @@ p, #splash-subtitle {
   .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
   #settings-panel { width: 90vw; right: 5vw; top: 100px; }
 }
-  </style>
   <style>
   .search-wrapper { position: relative; display: flex; align-items: center; }
 .search-icon { position: absolute; left: 16px; color: rgba(0,0,0,0.7); width: 20px; height: 20px; pointer-events: none; }
@@ -388,7 +387,7 @@ p, #splash-subtitle {
   </style>
   <style>
   .card {
-  position: relative;           /* already have this, but just confirming */
+  position: relative;           
 }
 
 .card-tag {
