@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arcady - 1.2.3</title>
+  <link rel="icon" type="image/png" href="/download.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!--Navigation Bar-->
+  <nav class="glass" id="nav-bar">
+    <a href="index.html" class="nav-logo">
+      <i data-lucide="sparkles"></i>
+      Arcady
+    </a>
+    <div class="nav-links">
+      <a href="index.html"><i data-lucide="home"></i> Home</a>
+      <a href="games.html"><i data-lucide="gamepad-2"></i> Games</a>
+      <a href="proxys.html"><i data-lucide="layout-grid"></i> Proxys</a>
+      <a href="chatgpt.html"><i data-lucide="brain"></i> Ai</a>
+      <a href="more.html"><i data-lucide="circle-ellipsis"></i> More</a>
+      <button id="settings-btn"><i data-lucide="settings"></i></button>
+    </div>
+  </nav>
+
+  <!--Settings Panel-->
+  <div id="settings-panel" class="glass">
+    <!-- (your settings panel content stays exactly the same) -->
+    <label for="bg-color">Background Color:</label>
+    <input type="color" id="bg-color" value="#87CEEB">
+    <label for="font-color">Font Color:</label>
+    <input type="color" id="font-color" value="#000000">
+    <label for="font-style">Font Style:</label>
+    <select id="font-style">
+      <option value="'Fredoka', sans-serif">Fredoka</option>
+      <option value="'Roboto', sans-serif">Roboto</option>
+      <option value="'Playfair Display', serif">Playfair Display</option>
+    </select>
+    <label for="bg-image">Background Image:</label>
+    <input type="file" id="bg-image" accept="image/*">
+    <button id="open-about-blank">Open in about:blank</button>
+    <label for="tab-title">Tab Cloak Title:</label>
+    <input type="text" id="tab-title" placeholder="e.g., Google Classroom">
+    <label for="tab-favicon">Tab Cloak Favicon URL:</label>
+    <input type="text" id="tab-favicon" placeholder="https://.../favicon.ico">
+    <button id="apply-cloak">Apply Tab Cloak</button>
+    <label>Font Glow:</label>
+    <input type="checkbox" id="font-glow">
+    <label for="nav-position">Nav Position:</label>
+    <select id="nav-position">
+      <option value="top-center">Top Center</option>
+      <option value="bottom-center">Bottom Center</option>
+      <option value="left">Left Side</option>
+      <option value="right">Right Side</option>
+    </select>
+    <button id="reset-settings">Reset All Settings</button>
+  </div>
+
+  <!--main content-->
+  <section class="hero glass" id="home">
+    <h1>Welcome to Arcady</h1>
+    <p id="splash-subtitle">Totally Not From The Creator Of Arcadium...</p>
+  </section>
+
+  <!-- News Section (inline styles kept as they are very specific) -->
+  <section class="news-section glass" style="margin: 60px auto; max-width: 1100px; padding: 3rem 2.5rem; text-align: center;">
+    <h2 style="font-size: 3.2rem; margin-bottom: 2rem; text-shadow: 0 4px 15px rgba(0,0,0,0.3);">Arcady News & Drops</h2>
+    <p style="font-size: 1.4rem; margin-bottom: 2.5rem; opacity: 0.9;">Look at these stuff for updates or something</p>
+    
+    <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+      <!-- News Item 1 -->
+      <div class="news-card glass" style="padding: 1.8rem; border-radius: 20px; transition: all 0.4s ease; cursor: pointer;"
+           onmouseover="this.style.transform='translateY(-12px)'; this.style.boxShadow='0 20px 50px rgba(0,0,0,0.3)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)'">
+        <h3 style="font-size: 1.6rem; margin-bottom: 1rem;">BRO MAKE SURE TO CHECK FOR UPDATES</h3>
+        <p style="font-size: 1.1rem; line-height: 1.6; opacity: 0.92;">Welcome To Version 1.2.3</p>
+      </div>
+
+      <!-- News Item 2 -->
+      <div class="news-card glass" style="padding: 1.8rem; border-radius: 20px; transition: all 0.4s ease; cursor: pointer;"
+           onmouseover="this.style.transform='translateY(-12px)'; this.style.boxShadow='0 20px 50px rgba(0,0,0,0.3)'"
+           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)'">
+        <h3 style="font-size: 1.6rem; margin-bottom: 1rem;">More GAMES!</h3>
+        <p style="font-size: 1.1rem; line-height: 1.6; opacity: 0.92;">Uhhhh ok</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcement Popup -->
+  <div id="announcement-modal">
+    <div class="modal-content">
+      <h2>Announcement</h2>
+      <p>Check out "Ome Productions" To get updates and new websites! https://ome-productions.my.canva.site/</p>
+      <button class="close-btn" id="close-modal">Got it!</button>
+    </div>
+  </div>
+
+  <!-- Scripts (unchanged) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    lucide.createIcons();
+    // ... (all your JavaScript stays exactly the same)
+  </script>
+  <!-- (keep all your subtitle rotator and announcement scripts) -->
+</body>
+</html>
