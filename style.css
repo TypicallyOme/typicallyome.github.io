@@ -7,8 +7,8 @@
 
 body {
   font-family: 'Fredoka', system-ui, -apple-system, sans-serif;
-  background-color: #87CEEB;
-  color: #000;
+  background-color: #000000;
+  color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
