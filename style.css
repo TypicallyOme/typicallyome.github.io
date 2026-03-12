@@ -228,11 +228,11 @@ p, #splash-subtitle {
 /* Gallery */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* lowered min-width so more boxes fit on medium/large screens */
   gap: 2.2rem;
-  padding: 0 1.5rem 4rem;
-  max-width: 1480px;
-  width: 100%;
+  padding: 0 2rem 4rem; /* slightly wider breathing room on the sides */
+  width: 100%;           /* takes full available width */
+  max-width: none;       /* REMOVED the old 1480px cap → boxes now stretch edge-to-edge on any screen */
   margin: 0 auto;
 }
 
